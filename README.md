@@ -27,7 +27,7 @@ The building footprint and height information was captured and developed in 2013
 
 **What unit is the data measured in?**
 
-The building height information is measured in meters. Please refer to [OSM height measurements](https://wiki.openstreetmap.org/wiki/Map_Features/Units) for additional detail.  
+The building height information is measured in meters. Please refer to [OSM height measurements](https://wiki.openstreetmap.org/wiki/Map_Features/Units) for additional detail.  The shapefiles are in [EPSG:4326, WGS 84](http://spatialreference.org/ref/epsg/wgs-84/).
 
 
 
