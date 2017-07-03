@@ -1,0 +1,592 @@
+/*******************************************************************************************
+
+Inline-Validation Style Sheet for JOSM
+
+Sample Code License
+
+IMPORTANT:  This Style Sheet (the “Apple Style Sheet”) is supplied to you by Apple Inc.
+("Apple") in consideration of your agreement to the following terms, and your use,
+modification or redistribution of the Apple Style Sheet constitutes acceptance of these
+terms.  If you do not agree with these terms, please do not use, modify or redistribute
+the Apple Style Sheet.
+
+In consideration of your agreement to abide by the following terms, and subject to these
+terms, Apple grants you a personal, non-exclusive license, under Apple's copyrights in the
+Apple Style Sheet to use, reproduce, modify and redistribute the Apple Style Sheet, with
+or without modifications, in source and/or binary forms; provided that if you redistribute
+the Apple Style Sheet in its entirety and without modifications, you must retain this
+notice and the following text and disclaimers in all such redistributions of the Apple
+Style Sheet.
+
+Neither the name, trademarks, service marks or logos of Apple Inc. may be used to endorse
+or promote products derived from or using the Apple Style Sheet without specific prior
+written permission from Apple.  Except as expressly stated in this notice, no other rights
+or licenses are granted or to be implied.
+
+The Apple Style Sheet is provided by Apple on an "AS IS" basis.  APPLE MAKES NO
+WARRANTIES, EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION THE IMPLIED WARRANTIES OF
+NON-INFRINGEMENT, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE, REGARDING THE
+APPLE STYLE SHEET OR ITS USE AND OPERATION ALONE OR IN COMBINATION WITH ANY OTHER
+SOFTWARE, HARDWARE, TECHNOLOGY, PRODUCTS OR MATERIALS.
+
+IN NO EVENT SHALL APPLE BE LIABLE FOR ANY SPECIAL, INDIRECT, INCIDENTAL OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS
+OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) ARISING IN ANY WAY OUT OF THE USE,
+REPRODUCTION, MODIFICATION AND/OR DISTRIBUTION OF THE APPLE STYLE SHEET, HOWEVER CAUSED
+AND WHETHER UNDER THEORY OF CONTRACT, TORT (INCLUDING NEGLIGENCE), STRICT LIABILITY OR
+OTHERWISE, EVEN IF APPLE HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Copyright (C) 2017 Apple Inc. All Rights Reserved.
+
+*******************************************************************************************/
+
+
+meta {
+    title: "Inline_Validation";
+    icon: "icons/style_icon.png";
+    description: "Validate map data as you edit.";
+    version: "0.1";
+}
+
+
+/**************************/
+/******** Settings ********/
+/**************************/
+
+setting::cRoads {
+    type: boolean;
+    label: tr("Highlight Continuous Roads");
+    default: false;
+}
+setting::french {
+    type: boolean;
+    label: tr("En Français");
+    default: false;
+}
+setting::spanish {
+    type: boolean;
+    label: tr("En Español");
+    default: false;
+}
+
+/***************************/
+/**** Roundabout Checks ****/
+/***************************/
+
+/** Roundabout-link check **/
+
+area[junction=roundabout][highway=motorway_link],
+area[junction=roundabout][highway=trunk_link],
+area[junction=roundabout][highway=primary_link],
+area[junction=roundabout][highway=secondary_link],
+area[junction=roundabout][highway=tertiary_link] 
+
+{set .roundabout_link;}
+
+way.roundabout_link:closed {
+    color: red;
+    opacity: 1;
+    width: 12;
+    text: tr("Incorrect Link Usage");
+    font-size: 20;
+    font-weight: bold;
+    text-color: white;
+    text-halo-color: black;
+    text-halo-radius: 1.5;
+    casing-width: 5;
+    casing-color: red;
+}
+way.roundabout_link:closed[setting("french")] {text: tr("Utilisation incorrecte de la lien");}
+way.roundabout_link:closed[setting("spanish")] {text: tr("Uso incorrecto de vía de enlace");}
+
+/* Missing Roundabout Tag Check */
+
+way[highway^=motorway],
+way[highway^=trunk],
+way[highway^=primary],
+way[highway^=secondary],
+way[highway^=tertiary]
+
+{set .roundabout_missing;}
+
+way.roundabout_missing:closed[!junction] {
+    color: white;
+    dashes-background-color: red;
+    dashes: 4,12;
+    opacity: 1;
+    width: 8;
+    text: tr("Missing Roundabout Tag");
+    text-offset-y: 50;
+    font-size: 20;
+    font-weight: bold;
+    text-color: white;
+    text-halo-color: black;
+    text-halo-radius: 1.5;
+    casing-width: 1;
+    casing-color: #000000;
+}
+way.roundabout_missing:closed[!junction][setting("french")]{text: tr("Tag de rond-point manquant");}
+way.roundabout_missing:closed[!junction][setting("spanish")]{text: tr("¿Falta etiqueta de rotonda?");}
+
+/* Suspicious Roundabout Direction */
+
+way[junction=roundabout]:righthandtraffic:clockwise,
+way[junction=roundabout]!:righthandtraffic:anticlockwise 
+
+{set .suspiciousDirection}
+
+way.suspiciousDirection {
+    text: tr("Suspicious roundabout direction");
+    font-size: 20;
+    font-weight: bold;
+    casing-color: red;
+    casing-width: 10;
+    text-color: white;
+    text-halo-color: black;
+    text-halo-radius: 1.5;
+}
+way.suspiciousDirection[setting("french")]{text: tr("La direction de la rond-point est méfiant");}
+way.suspiciousDirection[setting("spanish")]{text: tr("Dirección sospechosa de rotonda");}
+
+
+/*********************************/
+/** Missing One Way on Motorway **/
+/*********************************/
+
+way[highway=motorway], 
+way[highway=motorway_link] 
+
+{set .motorway_no_oneway}
+
+way.motorway_no_oneway[!oneway] {
+    dashes-background-color: red;
+    dashes: 4,9;
+    opacity: 1;
+    width: 16;
+    text: tr("Missing One Way on Motorway");
+    font-size: 25;
+    font-weight: bold;
+    text-color: white;
+    text-halo-color: black;
+    text-halo-radius: 1.5;
+    casing-width: 1;
+    casing-color: yellow;
+}
+way.motorway_no_oneway[!oneway][setting("french")] {
+    font-size: 20;
+    text: tr("Manquant une tag à sens unique sur l`autoroute");
+        /* note - grave (`) used instead of apostrophe (') due to mapcss syntax limitations */
+}
+way.motorway_no_oneway[!oneway][setting("spanish")] {text: tr("Falta etiqueta de sentido único/dirección en la autopista");}
+
+
+/*****************************/
+/**** Missing Layer Check ****/
+/*****************************/
+
+way[bridge=yes][!layer],
+way[bridge=yes]["layer"=~/^(-9|-8|-7|-6|-5|-4|-3|-2|-1)$/],
+way[bridge=aqueduct]["layer"=~/^(-9|-8|-7|-6|-5|-4|-3|-2|-1)$/],
+way[bridge=cantilever]["layer"=~/^(-9|-8|-7|-6|-5|-4|-3|-2|-1)$/],
+way[bridge=covered]["layer"=~/^(-9|-8|-7|-6|-5|-4|-3|-2|-1)$/],
+way[bridge=low_water_crossing]["layer"=~/^(-9|-8|-7|-6|-5|-4|-3|-2|-1)$/],
+way[bridge=trestle]["layer"=~/^(-9|-8|-7|-6|-5|-4|-3|-2|-1)$/],
+way[bridge=viaduct]["layer"=~/^(-9|-8|-7|-6|-5|-4|-3|-2|-1)$/],
+way[bridge=movable]["layer"=~/^(-9|-8|-7|-6|-5|-4|-3|-2|-1)$/], 
+way[bridge=aqueduct][!layer],
+way[bridge=cantilever][!layer],
+way[bridge=covered][!layer],
+way[bridge=low_water_crossing][!layer],
+way[bridge=trestle][!layer],
+way[bridge=viaduct][!layer],
+way[bridge=movable][!layer],
+way[tunnel=yes][!layer],
+way[tunnel=yes]["layer"=~/^(9|8|7|6|5|4|3|2|1)$/], 
+way[tunnel=culvert][!layer],
+way[tunnel=avalanche_protector][!layer]
+
+{set .missing_layer;}
+
+way.missing_layer {
+    color: yellow;
+    dashes-background-color: red;
+    dashes: 4,24;
+    opacity: 1;
+    width: eval(3*5);
+    text: tr("Missing Layer or Wrong Value");
+    text-offset: -50;
+    font-size: 20;
+    font-weight: bold;
+    text-color: white;
+    text-halo-color: black;
+    text-halo-radius: 1.5;
+    
+}
+way.missing_layer[setting("french")] {text: tr("Couche Manquante ou Incorrecte");}
+way.missing_layer[setting("spanish")] {text: tr("Falta capa o capa incorrecta");}
+
+/*************************/
+/**** Building Checks ****/
+/*************************/
+
+/*** Building-Road Connection Check ***/
+
+/* 1. Create highway class for highways that have a connection node */
+
+way[highway] > node:connection 
+
+{set .wayintersect;}
+
+/* 2. Create class in order to exclude these scenarios */
+
+way["highway"=~/^(pedestrian|footway|steps|path|cycleway|platform|crosswalk)$/] > node:connection,
+way[highway][covered=yes] > node:connection,
+way[highway][tunnel=building_passage] > node:connection,
+way["highway"=~/^(service|track)$/] > node:connection[entrance] 
+
+{set .wayexclude;}
+
+/* 3. Buildings that are connected to highways (except for the excludes) are flagged */
+
+way[building]:closed > node:connection.wayintersect!.wayexclude {
+    color: red;
+    fill-color: red;
+    fill-opacity: 0.7;
+    symbol-shape: triangle;
+    symbol-size: 25;
+    symbol-fill-color: red;
+    symbol-fill-opacity: 0.6;
+    symbol-stroke-color: black;
+    symbol-stroke-opacity: 0.7;
+    text: tr("Road intersecting Building!");
+    font-size: 20;
+    font-weight: bold;
+    text-offset: 50;
+    text-color: white;
+    text-halo-color: black;
+    text-halo-radius: 1.5;
+}
+
+way[building]:closed > node:connection.wayintersect!.wayexclude[setting("french")] {
+
+    text: tr("Cette route se croiser ce bâtiment!");
+        /* note - have to use grave (`) instead of apostrophe (') due to mapcss syntax limitations */
+}
+way[building]:closed > node:connection.wayintersect!.wayexclude[setting("spanish")] {text: tr("¡Carretera conectada al edificio!");}
+
+/* BuildingSnapped2Building */
+
+way[building]:closed > node:connection 
+
+{set .selectme;}
+
+node:selected.selectme {
+    fill-opacity: 0.9;
+    symbol-shape: triangle;
+    symbol-fill-color: yellow;
+    symbol-fill-opacity: 1;
+    symbol-stroke-color: black;
+    symbol-stroke-opacity: 1;
+}
+
+/* Building Inside Building Check */
+
+*[building][building!~/no|entrance/][any(tag("layer"),"0") = any(parent_tag("layer"),"0")] ∈ *[building][building!~/no|entrance/]
+
+{set .buildinginside}
+
+way.buildinginside {
+    text: tr("Building inside building!");
+    font-size: 20;
+    font-weight: bold;
+    width: 5;
+    casing-width: 3;
+    casing-color: red;
+    text-color: white;
+    text-halo-color: black;
+    text-halo-radius: 1.5;
+}
+way.buildinginside[setting("french")] {text: tr("Bâtiment à l`intérieur d`un bâtiment!");}
+way.buildinginside[setting("spanish")] {text: tr("¡Edificio dentro edificio!");}
+
+/* HUGE Building Check */
+
+area:closed[building][building!=no][eval(areasize()) > 550000] 
+
+{set .largeBuilding}
+
+area.largeBuilding {
+    text: tr("Large building");
+    font-size: 50;
+    font-weight: bold;
+    color: orange;
+    text-color: white;
+    text-halo-color: black;
+    text-halo-radius: 1.5;
+}
+area.largeBuilding[setting("french")]{text: tr("Bâtiment surdimensionné");}
+area.largeBuilding[setting("spanish")]{text: tr("Edificio grande");}
+
+/* Waterway Connected to Bridge */
+
+way[highway][bridge] > node:connection 
+
+{set .watercross;}
+
+way[waterway] > node:connection.watercross  {
+    text: tr("Node connects waterway and bridge");
+    font-size: 15;
+    font-weight: bold;
+    text-color: white;
+    text-halo-color: black;
+    text-halo-radius: 1.5;
+    symbol-shape: triangle;
+    symbol-size: 25;
+    symbol-fill-color: red;
+    symbol-fill-opacity: 1;
+    symbol-stroke-color: black;
+    symbol-stroke-opacity: 1;
+}
+way[waterway] > node:connection.watercross[setting("french")]{text: tr("Nœud reliant la voie navigable et le pont");}
+way[waterway] > node:connection.watercross[setting("spanish")]{text: tr("Conexión de vía fluvial y puente");}
+
+/**************************/
+/**** Continuous Roads ****/
+/**************************/
+
+way[highway][setting("cRoads")] {
+    crc:  CRC32_checksum(eval(osm_id()))/429496.7296;
+}
+
+
+/* 33 different special selected colors */
+way[highway][prop(crc)<303]
+{
+        color: #8B864E;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=303][prop(crc)<606]
+{
+        color: #b88142;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=606][prop(crc)<909]
+{
+        color: #a3fe8f;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=909][prop(crc)<1212]
+{
+        color: #b8674c;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=1212][prop(crc)<1515]
+{
+        color: #f4ff6b;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=1515][prop(crc)<1818]
+{
+        color: #81c0ff;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=1818][prop(crc)<2121]
+{
+        color: #6b8e23;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=2121][prop(crc)<2424]
+{
+        color: #e1bd6a;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=2424][prop(crc)<2727]
+{
+        color: #7fffd4;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=2727][prop(crc)<3030]
+{
+        color: #8a2be2;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=3030][prop(crc)<3333]
+{
+        color: #a52a2a;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=3333][prop(crc)<3636]
+{
+        color: #f0b9a6;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=3636][prop(crc)<3939]
+{
+        color: #8fbc8f;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=3939][prop(crc)<4242]
+{
+        color: #1b7777;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=4242][prop(crc)<4545]
+{
+        color: #ff1493;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=4545][prop(crc)<4848]
+{
+        color: #0072e2;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=4848][prop(crc)<5151]
+{
+        color: #008f00;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=5151][prop(crc)<5454]
+{
+        color: #ffcc00;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=5454][prop(crc)<5757]
+{
+        color: #BF9017;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=5757][prop(crc)<6060]
+{
+        color: #adff2f;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=6060][prop(crc)<6363]
+{
+        color: #ff69b4;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=6363][prop(crc)<6666]
+{
+        color: #cd5c5c;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=6666][prop(crc)<6969]
+{
+        color: #7d5a07;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=6969][prop(crc)<7272]
+{
+        color: #824600;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=7272][prop(crc)<7575]
+{
+        color: #f08080;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=7575][prop(crc)<7878]
+{
+        color: #F75617;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=7878][prop(crc)<8181]
+{
+        color: #54d954;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=8181][prop(crc)<8484]
+{
+        color: #ba55d3;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=8484][prop(crc)<8787]
+{
+        color: #9370db;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=8787][prop(crc)<9090]
+{
+        color: #ff7c00;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=9090][prop(crc)<9393]
+{
+        color: #3cb371;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=9393][prop(crc)<9696]
+{
+        color: #707000;
+        casing-width: 2;
+        casing-color: black;
+}
+                /* --------- */
+way[highway][prop(crc)>=9696]
+{
+        color: #ff4444;
+        casing-width: 2;
+        casing-color: black;
+}
