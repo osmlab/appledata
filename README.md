@@ -8,7 +8,7 @@ Information about:
 
 * [JOSM Paint Style](https://github.com/osmlab/appledata/wiki/Inline-Validation-Paint-Style-Information) used for validation.
 
-
+* [Atlas](https://github.com/osmlab/atlas), a tool Apple created for querying, visualizing, and storing OpenStreetMap data.
 
 ## Additional Information
 For more information please contact our community project lead [Andrew Wiseman](https://www.openstreetmap.org/user/Marion%20Barry). 
