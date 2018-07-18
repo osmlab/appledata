@@ -11,4 +11,4 @@ Information about:
 * [Atlas](https://github.com/osmlab/atlas), a tool Apple created for querying, visualizing, and storing OpenStreetMap data.
 
 ## Additional Information
-For more information please contact our community project lead [Andrew Wiseman](https://www.openstreetmap.org/user/Marion%20Barry). 
+For more information please contact our community project lead [Andrew Wiseman](https://www.openstreetmap.org/user/andrewwiseman). 
