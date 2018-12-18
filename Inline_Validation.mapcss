@@ -45,7 +45,7 @@ meta {
     title: "Inline_Validation";
     icon: "icons/style_icon.png";
     description: "Validate map data as you edit.";
-    version: "0.1";
+    version: "0.2";
 }
 
 
@@ -68,6 +68,11 @@ setting::spanish {
     label: tr("En Español");
     default: false;
 }
+setting::text_scaling {
+    type: boolean;
+    label: tr("Turn Text-Scaling On/Off");
+    default: true;
+}
 
 /***************************/
 /**** Roundabout Checks ****/
@@ -81,14 +86,16 @@ area[junction=roundabout][highway=primary_link],
 area[junction=roundabout][highway=secondary_link],
 area[junction=roundabout][highway=tertiary_link] 
 
-{set .roundabout_link;}
+{
+    set .roundabout_link;
+}
 
 way.roundabout_link:closed {
     color: red;
     opacity: 1;
     width: 12;
     text: tr("Incorrect Link Usage");
-    font-size: 20;
+    font-size: 15;
     font-weight: bold;
     text-color: white;
     text-halo-color: black;
@@ -96,8 +103,12 @@ way.roundabout_link:closed {
     casing-width: 5;
     casing-color: red;
 }
-way.roundabout_link:closed[setting("french")] {text: tr("Utilisation incorrecte de la lien");}
-way.roundabout_link:closed[setting("spanish")] {text: tr("Uso incorrecto de vía de enlace");}
+way.roundabout_link:closed[setting("french")] {
+    text: tr("Utilisation incorrecte de la lien");
+}
+way.roundabout_link:closed[setting("spanish")] {
+    text: tr("Uso incorrecto de vía de enlace");
+}
 
 /* Missing Roundabout Tag Check */
 
@@ -107,7 +118,9 @@ way[highway^=primary],
 way[highway^=secondary],
 way[highway^=tertiary]
 
-{set .roundabout_missing;}
+{
+    set .roundabout_missing;
+}
 
 way.roundabout_missing:closed[!junction] {
     color: white;
@@ -116,8 +129,7 @@ way.roundabout_missing:closed[!junction] {
     opacity: 1;
     width: 8;
     text: tr("Missing Roundabout Tag");
-    text-offset-y: 50;
-    font-size: 20;
+    font-size: 15;
     font-weight: bold;
     text-color: white;
     text-halo-color: black;
@@ -125,19 +137,25 @@ way.roundabout_missing:closed[!junction] {
     casing-width: 1;
     casing-color: #000000;
 }
-way.roundabout_missing:closed[!junction][setting("french")]{text: tr("Tag de rond-point manquant");}
-way.roundabout_missing:closed[!junction][setting("spanish")]{text: tr("¿Falta etiqueta de rotonda?");}
+way.roundabout_missing:closed[!junction][setting("french")]{
+    text: tr("Tag de rond-point manquant");
+}
+way.roundabout_missing:closed[!junction][setting("spanish")]{
+    text: tr("¿Falta etiqueta de rotonda?");
+}
 
 /* Suspicious Roundabout Direction */
 
 way[junction=roundabout]:righthandtraffic:clockwise,
 way[junction=roundabout]!:righthandtraffic:anticlockwise 
 
-{set .suspiciousDirection}
+{
+    set .suspiciousDirection;
+}
 
 way.suspiciousDirection {
-    text: tr("Suspicious roundabout direction");
-    font-size: 20;
+    text: tr("Suspicious Roundabout Direction");
+    font-size: 15;
     font-weight: bold;
     casing-color: red;
     casing-width: 10;
@@ -145,8 +163,12 @@ way.suspiciousDirection {
     text-halo-color: black;
     text-halo-radius: 1.5;
 }
-way.suspiciousDirection[setting("french")]{text: tr("La direction de la rond-point est méfiant");}
-way.suspiciousDirection[setting("spanish")]{text: tr("Dirección sospechosa de rotonda");}
+way.suspiciousDirection[setting("french")]{
+    text: tr("La direction de la rond-point est méfiant");
+}
+way.suspiciousDirection[setting("spanish")]{
+    text: tr("Dirección sospechosa de rotonda");
+}
 
 
 /*********************************/
@@ -156,7 +178,9 @@ way.suspiciousDirection[setting("spanish")]{text: tr("Dirección sospechosa de r
 way[highway=motorway], 
 way[highway=motorway_link] 
 
-{set .motorway_no_oneway}
+{
+    set .motorway_no_oneway
+}
 
 way.motorway_no_oneway[!oneway] {
     dashes-background-color: red;
@@ -164,7 +188,7 @@ way.motorway_no_oneway[!oneway] {
     opacity: 1;
     width: 16;
     text: tr("Missing One Way on Motorway");
-    font-size: 25;
+    font-size: 15;
     font-weight: bold;
     text-color: white;
     text-halo-color: black;
@@ -173,11 +197,12 @@ way.motorway_no_oneway[!oneway] {
     casing-color: yellow;
 }
 way.motorway_no_oneway[!oneway][setting("french")] {
-    font-size: 20;
     text: tr("Manquant une tag à sens unique sur l`autoroute");
         /* note - grave (`) used instead of apostrophe (') due to mapcss syntax limitations */
 }
-way.motorway_no_oneway[!oneway][setting("spanish")] {text: tr("Falta etiqueta de sentido único/dirección en la autopista");}
+way.motorway_no_oneway[!oneway][setting("spanish")] {
+    text: tr("Falta etiqueta de sentido único/dirección en la autopista");
+}
 
 
 /*****************************/
@@ -205,7 +230,9 @@ way[tunnel=yes]["layer"=~/^(9|8|7|6|5|4|3|2|1)$/],
 way[tunnel=culvert][!layer],
 way[tunnel=avalanche_protector][!layer]
 
-{set .missing_layer;}
+{
+    set .missing_layer;
+}
 
 way.missing_layer {
     color: yellow;
@@ -214,16 +241,19 @@ way.missing_layer {
     opacity: 1;
     width: eval(3*5);
     text: tr("Missing Layer or Wrong Value");
-    text-offset: -50;
-    font-size: 20;
+    font-size: 15;
     font-weight: bold;
     text-color: white;
     text-halo-color: black;
     text-halo-radius: 1.5;
     
 }
-way.missing_layer[setting("french")] {text: tr("Couche Manquante ou Incorrecte");}
-way.missing_layer[setting("spanish")] {text: tr("Falta capa o capa incorrecta");}
+way.missing_layer[setting("french")] {
+    text: tr("Couche Manquante ou Incorrecte");
+}
+way.missing_layer[setting("spanish")] {
+    text: tr("Falta capa o capa incorrecta");
+}
 
 /*************************/
 /**** Building Checks ****/
@@ -235,7 +265,9 @@ way.missing_layer[setting("spanish")] {text: tr("Falta capa o capa incorrecta");
 
 way[highway] > node:connection 
 
-{set .wayintersect;}
+{
+    set .wayintersect;
+}
 
 /* 2. Create class in order to exclude these scenarios */
 
@@ -244,7 +276,9 @@ way[highway][covered=yes] > node:connection,
 way[highway][tunnel=building_passage] > node:connection,
 way["highway"=~/^(service|track)$/] > node:connection[entrance] 
 
-{set .wayexclude;}
+{
+    set .wayexclude;
+}
 
 /* 3. Buildings that are connected to highways (except for the excludes) are flagged */
 
@@ -259,7 +293,7 @@ way[building]:closed > node:connection.wayintersect!.wayexclude {
     symbol-stroke-color: black;
     symbol-stroke-opacity: 0.7;
     text: tr("Road intersecting Building!");
-    font-size: 20;
+    font-size: 15;
     font-weight: bold;
     text-offset: 50;
     text-color: white;
@@ -272,13 +306,17 @@ way[building]:closed > node:connection.wayintersect!.wayexclude[setting("french"
     text: tr("Cette route se croiser ce bâtiment!");
         /* note - have to use grave (`) instead of apostrophe (') due to mapcss syntax limitations */
 }
-way[building]:closed > node:connection.wayintersect!.wayexclude[setting("spanish")] {text: tr("¡Carretera conectada al edificio!");}
+way[building]:closed > node:connection.wayintersect!.wayexclude[setting("spanish")] {
+    text: tr("¡Carretera conectada al edificio!");
+}
 
 /* BuildingSnapped2Building */
 
 way[building]:closed > node:connection 
 
-{set .selectme;}
+{
+    set .selectme;
+}
 
 node:selected.selectme {
     fill-opacity: 0.9;
@@ -293,12 +331,15 @@ node:selected.selectme {
 
 *[building][building!~/no|entrance/][any(tag("layer"),"0") = any(parent_tag("layer"),"0")] ∈ *[building][building!~/no|entrance/]
 
-{set .buildinginside}
+{
+    set .buildinginside
+}
 
 way.buildinginside {
     text: tr("Building inside building!");
-    font-size: 20;
+    font-size: 15;
     font-weight: bold;
+    text-position: center;
     width: 5;
     casing-width: 3;
     casing-color: red;
@@ -306,32 +347,44 @@ way.buildinginside {
     text-halo-color: black;
     text-halo-radius: 1.5;
 }
-way.buildinginside[setting("french")] {text: tr("Bâtiment à l`intérieur d`un bâtiment!");}
-way.buildinginside[setting("spanish")] {text: tr("¡Edificio dentro edificio!");}
+way.buildinginside[setting("french")] {
+    text: tr("Bâtiment à l`intérieur d`un bâtiment!");
+}
+way.buildinginside[setting("spanish")] {
+    text: tr("¡Edificio dentro edificio!");
+}
 
 /* HUGE Building Check */
 
 area:closed[building][building!=no][eval(areasize()) > 550000] 
 
-{set .largeBuilding}
+{
+    set .largeBuilding;
+}
 
 area.largeBuilding {
     text: tr("Large building");
-    font-size: 50;
+    font-size: 25;
     font-weight: bold;
     color: orange;
     text-color: white;
     text-halo-color: black;
     text-halo-radius: 1.5;
 }
-area.largeBuilding[setting("french")]{text: tr("Bâtiment surdimensionné");}
-area.largeBuilding[setting("spanish")]{text: tr("Edificio grande");}
+area.largeBuilding[setting("french")]{
+    text: tr("Bâtiment surdimensionné");
+}
+area.largeBuilding[setting("spanish")]{
+    text: tr("Edificio grande");
+}
 
 /* Waterway Connected to Bridge */
 
 way[highway][bridge] > node:connection 
 
-{set .watercross;}
+{
+    set .watercross;
+}
 
 way[waterway] > node:connection.watercross  {
     text: tr("Node connects waterway and bridge");
@@ -347,8 +400,107 @@ way[waterway] > node:connection.watercross  {
     symbol-stroke-color: black;
     symbol-stroke-opacity: 1;
 }
-way[waterway] > node:connection.watercross[setting("french")]{text: tr("Nœud reliant la voie navigable et le pont");}
-way[waterway] > node:connection.watercross[setting("spanish")]{text: tr("Conexión de vía fluvial y puente");}
+way[waterway] > node:connection.watercross[setting("french")]{
+    text: tr("Nœud reliant la voie navigable et le pont");
+}
+way[waterway] > node:connection.watercross[setting("spanish")]{
+    text: tr("Conexión de vía fluvial y puente");
+}
+
+/******************************/
+/***Building Crossing Building***/
+/******************************/
+
+area:closed[building] ⧉ area:closed[building] {
+  text: tr("Overlapping Buildings!");
+  text-color: white;
+  text-halo-color: black;
+  text-halo-radius: 1.5;
+  font-size: 15;
+  font-weight: bold;
+  color: #FF0000;
+  width: 1;
+  text-position: center;
+  set .building_crossing_building;
+}
+
+area.building_crossing_building[setting("french")]{
+    text: tr("Bâtiments qui se chevauchent!");
+}
+area.building_crossing_building[setting("spanish")]{
+    text: tr("Edificios superpuestos!");
+}
+
+/*******************************/
+/* Floating Roads Check */
+/*******************************/
+
+node:connection < way[highway] {
+   set .has_connection;
+}
+
+node!:in-downloaded-area <[index=1] way[highway],
+node!:in-downloaded-area <[index=-1] way[highway]  {
+   set .outside_area;
+}
+
+way["highway"=~/^(motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential|living_street|service)$/]!:new!.has_connection!.outside_area {
+   color: #F20000;
+   text: tr("Floating Highway!");
+   text-color: white;
+   text-halo-color: black;
+   text-halo-radius: 1.5;
+   font-size: 15;
+   font-weight: bold;
+   dashes: none;
+   casing-dashes: none;
+   casing-color: #F20000;
+   set .floating_roads;
+}
+
+way.floating_roads[setting("french")]{
+    text: tr("Route flottante!");
+}
+way.floating_roads[setting("spanish")]{
+    text: tr("Carretera flotante!");
+}
+
+/**************************/
+/* Dead-End Oneways */
+/**************************/
+
+way["highway"=~/^(motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential|living_street|service|track)$/]["oneway"=~/^(yes|-1)$/]!:closed!.outside_area >[index=1] node[!amenity]!:connection:in-downloaded-area,
+way["highway"=~/^(motorway|motorway_link|trunk|trunk_link|primary|primary_link|secondary|secondary_link|tertiary|tertiary_link|unclassified|residential|living_street|service|track)$/]["oneway"=~/^(yes|-1)$/]!:closed!.outside_area >[index=-1] node[!amenity]!:connection:in-downloaded-area {
+   symbol-shape: circle;
+   symbol-size: 15;
+   symbol-fill-color: red;
+   symbol-fill-opacity: 0.6;
+   symbol-stroke-color: black;
+   symbol-stroke-opacity: 0.7;
+   text: tr("Dead-End Oneway");
+   text-color: white;
+   text-halo-color: black;
+   text-halo-radius: 1.5;
+   font-weight: bold;
+   font-size: 15;
+   z-index: -20;
+   set .select_dead_end_nodes;
+}
+
+node.select_dead_end_nodes[setting("french")]{
+    text: tr("Impasse oneway!");
+}
+node.select_dead_end_nodes[setting("spanish")]{
+    text: tr("Callejón sin salida!");
+}
+
+node:selected.select_dead_end_nodes {
+    symbol-shape: circle;
+    symbol-fill-color: yellow;
+    symbol-fill-opacity: 1;
+    symbol-stroke-color: black;
+    symbol-stroke-opacity: 1;
+}
 
 /**************************/
 /**** Continuous Roads ****/
@@ -589,4 +741,13 @@ way[highway][prop(crc)>=9696]
         color: #ff4444;
         casing-width: 2;
         casing-color: black;
+}
+
+/**************************/
+/**** Text Scaling ****/
+/**************************/
+
+way|z-18[setting("text_scaling")],
+node|z-18[setting("text_scaling")] {
+    text: none;
 }
