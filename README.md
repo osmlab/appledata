@@ -10,7 +10,7 @@ Information about:
 
 * [Atlas](https://github.com/osmlab/atlas), a tool Apple created for querying, visualizing, and storing OpenStreetMap data.
 
-* [MapRoulette](https://github.com/osmlab/appledata/wiki/MapRoulette-Challenges) challenges greated using Atlas.
+* [MapRoulette](https://github.com/osmlab/appledata/wiki/MapRoulette-Challenges) challenges created using Atlas.
 
 ## Additional Information
 For more information please contact our community project lead [Andrew Wiseman](https://www.openstreetmap.org/user/andrewwiseman). 
