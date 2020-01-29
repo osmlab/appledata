@@ -6,7 +6,7 @@ Information about:
 
 * Data Improvement [Projects](https://github.com/osmlab/appledata/issues) being worked on by the Apple [Data Team](https://github.com/osmlab/appledata/wiki/Data-Team).   
 
-* [JOSM Paint Style](https://github.com/osmlab/appledata/wiki/Inline-Validation-Paint-Style-Information) used for validation.
+* A [JOSM Paint Style](https://github.com/osmlab/applepaintstyles) we created for easier editing, visualization and data validation.
 
 * [Atlas](https://github.com/osmlab/atlas), a tool Apple created for querying, visualizing, and storing OpenStreetMap data.
 
