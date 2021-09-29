@@ -17,6 +17,7 @@ This contribution is made available for use under the OpenStreetMap [ODbL](https
 | Country     | Last updated | Shape Count | Description | Projection | Link |
 | ------------|-------------|--------------|-------------------------------------------------------------------|------------|------------|
 | Bosnia and Herzegovina      | Sept 15, 2021     | 13,120   | Street name data | [EPSG:3857](http://www.epsg-registry.org/report.htm?type=selection&entity=urn:ogc:def:crs:EPSG::3857&reportDetail=short&style=urn:uuid:report-style:default-with-code&style_name=OGP%20Default%20With%20Code&title=EPSG:3857)  | [Download](https://apple.box.com/s/mlwyzriqrhoc7fp2pmhvtw28vkh5vt9u)   |
+| Philippines      | Sept 15, 2021     | 2,616  | Street name data | [EPSG:3857](http://www.epsg-registry.org/report.htm?type=selection&entity=urn:ogc:def:crs:EPSG::3857&reportDetail=short&style=urn:uuid:report-style:default-with-code&style_name=OGP%20Default%20With%20Code&title=EPSG:3857)  | [Download](https://apple.box.com/s/j8aj5kevvybmbauae1hay16thg2qbn05)   |
 
 
 
