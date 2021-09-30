@@ -3,7 +3,7 @@
 
 ## Introduction
 
-Apple is sharing street name information in selected countries. We believe this data is accurate but we recommend, as with all data, that it should be verified locally. The data was derived from address data that was collected through various methods, including as field survey and is from 2020 and 2021. The street names were selected from the addresses near the street segments. We plan to continually update the data posted below as well, and will update the table below when we do.
+Apple is sharing street name information in selected countries. We believe this data is accurate but we recommend, as with all data, that it should be verified locally. The data was derived from address data that was collected through various methods including field survey and is from 2020 and 2021. The street names were selected from the addresses near the street segments. We plan to continually update the data posted below as well, and will update the table below when we do.
 
 
 ## License
