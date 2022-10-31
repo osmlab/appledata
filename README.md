@@ -13,4 +13,6 @@ Information about:
 * Building Footprint [Data](https://github.com/osmlab/appledata/blob/master/BUILDINGS.md) that Apple is sharing.
 
 ## Additional Information
-For more information please contact our community project lead [Andrew Wiseman](https://www.openstreetmap.org/user/andrewwiseman). 
+Our community lead is Teddy Ahlvin and our editing leads are Jon Westlake and Erica Olson.
+To get in touch with Teddy, you can [email](mailto:tahvlin@apple.com) or contact him via [OSM](https://www.openstreetmap.org/user/LessThan3Nodes). (https://www.openstreetmap.org/user/LessThan3Nodes)
+All of our leads can be reached [via email](mailto:osm-feedback@group.apple.com).
