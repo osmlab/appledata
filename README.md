@@ -14,5 +14,6 @@ Information about:
 
 ## Additional Information
 Our community lead is Teddy Ahlvin and our editing leads are Jon Westlake and Erica Olson.
-To get in touch with Teddy, you can [email](mailto:tahvlin@apple.com) or contact him via [OSM](https://www.openstreetmap.org/user/LessThan3Nodes). (https://www.openstreetmap.org/user/LessThan3Nodes)
+To get in touch with Teddy, you can [email](mailto:tahvlin@apple.com) or contact him via [OSM](https://www.openstreetmap.org/user/LessThan3Nodes). 
+
 All of our leads can be reached [via email](mailto:osm-feedback@group.apple.com).
