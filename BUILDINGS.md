@@ -46,7 +46,7 @@ The shapefiles are available in two projections: [ESPG:3857 (Pseudo Mercator)](h
 
 
 ## Additional Information
-For more information please contact our community project lead [Andrew Wiseman](https://www.openstreetmap.org/user/andrewwiseman).
+For more information please contact our community project lead [Teddy Ahlvin](https://www.openstreetmap.org/user/LessThan3Nodes).
 
 
 ## Comments
